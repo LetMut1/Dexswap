@@ -1,0 +1,18 @@
+services:
+    rust_stable_toolchain:
+        container_name: intermediary_program_rust_stable_toolchain
+        build:
+            context: ./service/rust_stable_toolchain/
+            dockerfile: dockerfile
+        environment:
+            USER: ${USER}
+        volumes:
+            - ./../../../../../:/intermediary
+        working_dir: /intermediary
+        restart: always
+        tty: true
+        init: true
+networks:
+    default:
+        name: intermediary_program
+        driver: bridge

@@ -1,0 +1,15 @@
+services:
+    solana:
+        container_name: intermediary_program_solana
+        build:
+            context: ./service/solana
+            dockerfile: dockerfile
+        volumes:
+            - ./../../../:/intermediary
+        restart: always
+        tty: true
+        init: true
+networks:
+    default:
+        external: true
+        name: intermediary_program

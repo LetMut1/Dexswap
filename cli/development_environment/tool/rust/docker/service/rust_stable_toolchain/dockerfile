@@ -1,0 +1,35 @@
+FROM rust:1.84.1
+RUN \
+    mkdir -p /intermediary
+RUN \
+    rustup default 1.84.1-x86_64-unknown-linux-gnu
+RUN \
+    rustup toolchain install nightly-x86_64-unknown-linux-gnu
+RUN \
+    rustup component add --toolchain=1.84.1-x86_64-unknown-linux-gnu \
+        clippy \
+        rust-src
+RUN \
+    rustup component add --toolchain=nightly-x86_64-unknown-linux-gnu \
+        rustfmt
+RUN \
+    git config --global --add safe.directory /intermediary
+ENV TZ=America/New_York
+ENV DEBIAN_FRONTEND=noninteractive
+ENV HOME=/root
+RUN \
+    apt-get update && \
+    apt-get upgrade -y
+RUN \
+    apt-get install -y \
+        curl \
+        build-essential \
+        pkg-config \
+        libudev-dev \
+        llvm \
+        libclang-dev \
+        protobuf-compiler \
+        libssl-dev
+RUN \
+    sh -c "$(curl -sSfL https://release.anza.xyz/stable/install)"
+ENV PATH=/$HOME/.local/share/solana/install/active_release/bin:$PATH

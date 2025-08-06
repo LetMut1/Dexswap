@@ -1,0 +1,38 @@
+[package]
+name = "client"
+version = "1.0.0"
+authors = ["Zimin Dmitriy"]
+rust-version = "1.84.1"
+edition = "2021"
+
+[[bin]]
+name = "client"
+
+[dependencies]
+borsh = { package = "borsh", version = "1.5.3", default-features = true, features = [], optional = false }
+bytemuck = { package = "bytemuck", version = "1.4.0", default-features = true, features = [], optional = false }
+clap = { package = "clap", version = "=4.5.17", default-features = true, features = ["cargo"], optional = false }
+intermediary = { package = "intermediary", path = "./../../program/application", version = "1.0.0", default-features = true, features = ["no-entrypoint"], optional = false }
+serde = { package = "serde", version = "1.0.145", default-features = true, features = [], optional = false }
+serde_json = { package = "serde_json", version = "1.0.140", default-features = true, features = [], optional = false }
+solana_program = { package = "solana-program", version = "=2.2.1", default-features = true, features = [], optional = false }
+solana_rpc_client = { package = "solana-rpc-client", version = "=2.2.7", default-features = true, features = [], optional = false }
+solana_sdk = { package = "solana-sdk", version = "=2.2.2", default-features = true, features = [], optional = false }
+spl_token = { package = "spl-token", version = "8.0.0", default-features = true, features = ["no-entrypoint"], optional = false }
+
+[features]
+default = []
+intermediary_devnet = [
+    "intermediary/devnet"
+]
+
+[profile.release]
+opt-level = 3
+debug = false
+debug-assertions = false
+overflow-checks = true
+lto = "fat"
+panic = "unwind"
+incremental = false
+codegen-units = 1
+rpath = false

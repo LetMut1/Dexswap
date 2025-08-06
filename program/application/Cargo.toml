@@ -1,0 +1,83 @@
+[package]
+name = "intermediary"
+version = "1.0.0"
+authors = ["Zimin Dmitriy"]
+rust-version = "1.79.0"
+edition = "2021"
+
+[lib]
+name = "intermediary"
+edition = "2021"
+crate-type = ["cdylib", "lib"]
+required-features = []
+
+[dependencies]
+arrayref = { package = "arrayref", version = "0.3.6", default-features = true, features = [], optional = false }
+borsh = { package = "borsh", version = "1.5.3", default-features = true, features = [], optional = false }
+bytemuck = { package = "bytemuck", version = "1.4.0", default-features = true, features = [], optional = false }
+enumflags2 = { package = "enumflags2", version = "0.6.4", default-features = true, features = [], optional = false }
+num_derive = { package = "num-derive", version = "0.4.2", default-features = true, features = [], optional = false }
+num_enum = { package = "num_enum", version = "0.5.7", default-features = true, features = [], optional = false }
+num_traits = { package = "num-traits", version = "0.2.19", default-features = true, features = [], optional = false }
+safe_transmute = { package = "safe-transmute", version = "0.11.0", default-features = true, features = [], optional = false }
+serde = { package = "serde", version = "1.0.150", default-features = true, features = [], optional = false }
+solana_program = { package = "solana-program", version = "=2.2.1", default-features = true, features = [], optional = false }
+solana_program_error = { package = "solana-program-error", version = "=2.2.2", default-features = true, features = [], optional = false }
+spl_token = { package = "spl-token", version = "8.0.0", default-features = true, features = ["no-entrypoint"], optional = false }
+static_assertions = { package = "static_assertions", version = "=1.1.0", default-features = true, features = [], optional = false }
+uint = { package = "uint", version = "0.10.0", default-features = true, features = [], optional = false }
+
+# For RaydiumV4 swap-math.
+#
+# There is a conflict for resolving wich it is needed to downgrade 'solana_program' to <1.17 version
+# and other crates which leads to another unresolved conflicts.
+# So, we can copy code from source.
+#
+# raydium_v4 = { package = "raydium_amm", git = "https://github.com/raydium-io/raydium-amm.git", rev = "2748852a7981c2b6909e07e10b1325669fbb9195", version = "0.3.1", default-features = false, features = ["no-entrypoint"], optional = false }
+
+# For RaydiumV4 swap-math.
+#
+# There is a conflict for resolving wich it is needed to downgrade 'solana_program' to <1.17 version
+# and other crates which leads to another unresolved conflicts.
+# So, we can copy code from source.
+#
+# serum_dex = { package = "serum_dex", git = "https://github.com/raydium-io/openbook-dex.git", version = "0.5.10", default-features = false, features = ["no-entrypoint", "program"], optional = false }
+
+# For MeteoraV1 swap-math.
+#
+# There is a conflict for resolving wich it is needed to downgrade 'solana_program' to <1.17 version
+# and other crates which leads to another unresolved conflicts.
+# So, we can copy code from source.
+#
+# spl_math = { package = "spl-math", version = "0.3.0", default-features = true, features = [], optional = false }
+
+# For MeteoraV1 swap-math.
+#
+# There is a conflict for resolving wich it is needed to downgrade 'solana_program' to <1.17 version
+# and other crates which leads to another unresolved conflicts.
+# So, we can copy code from source.
+#
+# dynamic_amm_quote = { package = "dynamic-amm-quote", git = "https://github.com/MeteoraAg/damm-v1-sdk.git", rev = "b21e2efb3680c17a68149ed2e22465aeef9b3784", version = "0.0.5", default-features = false, features = [], optional = false }
+
+[features]
+default = []
+no-entrypoint = []
+devnet = []
+
+[lints.rust]
+dead_code = { level = "allow", priority = 0 }
+
+[lints.clippy]
+collapsible_else_if = { level = "allow", priority = 0 }
+too_many_arguments = { level = "allow", priority = 0 }
+
+[profile.release]
+opt-level = 3
+debug = false
+debug-assertions = false
+overflow-checks = true
+lto = "fat"
+panic = "unwind"
+incremental = false
+codegen-units = 1
+rpath = false

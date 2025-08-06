@@ -1,0 +1,22 @@
+FROM ubuntu:22.04
+ENV TZ=America/New_York
+ENV DEBIAN_FRONTEND=noninteractive
+ENV HOME=/root
+RUN \
+    mkdir -p /intermediary
+RUN \
+    apt-get update && \
+    apt-get upgrade -y
+RUN \
+    apt-get install -y \
+        curl \
+        build-essential \
+        pkg-config \
+        libudev-dev \
+        llvm \
+        libclang-dev \
+        protobuf-compiler \
+        libssl-dev
+RUN \
+    sh -c "$(curl -sSfL https://release.anza.xyz/v2.1.15/install)"
+ENV PATH=/$HOME/.local/share/solana/install/active_release/bin:$PATH
