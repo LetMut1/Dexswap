@@ -1,6 +1,25 @@
-Для выполнения технического задания не обязательно было создавть сущность, хранящую дополнительные управляющие данные, и достаточно было реализовать метод swap(...), но для демонстрации понимания основ построения контрактов на Солане я увеличил количество кода, и была введена сущность Intermediary.
+To fulfill the technical task, it was not necessary to create an entity storing additional control data, and it was enough to implement the swap(...) method, but to demonstrate an understanding of the basics of building contracts on Solana, I increased the amount of code, and the Intermediary entity was introduced.
 
-Чтобы на стороне нашего контракта была возможность определять доступность Пула, необходимо было повторить реализацию логики доступности Пула, реализованную на стороне контракта Декса.
-Соответственно, стояла задача внедрения кода с крейтов Дексов, но, к сожалению, прямое подключение крейтов приводило ко множественным ошибкам зависимостей. (Если быть точным, то существовала возможность прямого подключения набора крейтов лишь для 1 любого Декса, но для этого было необходиом понизить версию SolanaProgram.
-Так же можно было сделать Гит-форки крейтов Дексов и повысить версии используемых внутри крейтов, чтобы обеспечить дальнейшую совместимость при внедрении.
-Я выбрал вариант копирования необходиомго кода из крейтов Декса (разумеется, с соблюдением лэйаута структур и формата их сериализации)
+In order for our contract to be able to determine the availability of the Pool, it was necessary to repeat the implementation of the Pool availability logic implemented on the Dex contract side.
+Accordingly, the task was to implement the code from the Dex crates, but, unfortunately, direct connection of the crates led to multiple dependency errors. (To be precise, it was possible to directly connect a set of crates for only 1 of any Dex, but for this it was necessary to downgrade the SolanaProgram version.
+It was also possible to make Git-forks of the Dex crates and increase the versions of the crates used inside to ensure further compatibility during implementation.
+I chose the option of copying the necessary code from the Dex crates (of course, observing the layout of the structures and their serialization format)
+<br>
+<br>
+<br>
+<br>
+<br>
+
+To executes the commands it is needed to create and to launch the docker-container from `/$ROOT/program/development_environment/tool/rust/docker/docker-compose.yaml`
+<br>
+<br>
+To deploy contract to Devnet a sequence of commands must be executed:<br>
+```
+solana config set --url https://api.devnet.solana.com
+```
+```
+cargo build-sbf --features=devnet --manifest-path=/intermediary/program/application/Cargo.toml
+```
+```
+solana program deploy /intermediary/program/application/target/deploy/intermediary.so --program-id=/intermediary/_keypairs/devnet_program_id_keypair.json --keypair=/intermediary/_keypairs/intermediary_manager.json<br>
+```
